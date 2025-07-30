@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Appointments</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4faff;
+      padding: 40px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>My Appointments</h2>
+    {% if appointments %}
+    <table>
+      <tr>
+        <th>Department</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Actions</th>
+      </tr>
+      {% for appt in appointments %}
+      <tr>
+        <td>{{ appt.department }}</td>
+        <td>{{ appt.date }}</td>
+        <td>{{ appt.time }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('cancel_appointment', appointment_id=appt.id) }}">
+            <button type="submit" style="background-color: #ff4d4d; color: white; border: none; padding: 8px 12px; border-radius: 5px;">Cancel</button>
+          </form>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+      <p style="text-align:center;">No appointments booked yet.</p>
+    {% endif %}
+    <a href="{{ url_for('department_list') }}">← Book Another Appointment</a>
+  </div>
+</body>
+</html>
