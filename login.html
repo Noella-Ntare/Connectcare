@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Connectcare</title>
@@ -29,7 +30,7 @@
 
     <!-- Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-  <style>
+   <style>
     body {
       background-color: #f4faff;
       font-family: 'Segoe UI', sans-serif;
@@ -48,7 +49,7 @@
     h2 {
       color: #007bff;
     }
-    input[type="text"], input[type="email"], input[type="password"] {
+    input[type="email"], input[type="password"] {
       width: 90%;
       padding: 10px;
       margin: 10px 0;
@@ -95,19 +96,20 @@
                 <a href="index.html" class="nav-item nav-link active">Home</a>
             </div>
             <a href="appointment.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
+             <a href="register.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">SignUp<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
 
   <div class="container">
-    <h2>Create Account</h2>
-    <form method="POST" action="templates/register.html">
-      <input type="text" name="name" placeholder="Full Name" required>
+    <h2>Login</h2>
+    <form method="POST" action="login.html">
       <input type="email" name="email" placeholder="Email Address" required>
       <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Sign Up</button>
+      <button type="submit">Login</button>
     </form>
-    <a href="templates/login.html">Already have an account? Login</a>
+    <a href="register.html">New user? Sign up here</a>
   </div>
+  
 </body>
 </html>
