@@ -7,7 +7,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'b7he#fyy@gfv$dr%'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///connectcare.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/connectcare.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Fix mail configuration
@@ -49,6 +49,11 @@ def load_user(user_id):
 @app.route('/')
 def home():
     return redirect(url_for('login'))
+
+# Add health check for Render
+@app.route('/health')
+def health_check():
+    return {'status': 'healthy'}, 200
 
 # Add missing book_appointment route
 @app.route('/book')
@@ -104,11 +109,11 @@ def book_by_department(department):
         db.session.add(appointment)
         db.session.commit()
 
-        # Email
+        # Email (make it optional for deployment)
         try:
             msg = Message(
                 f"Your {department} Appointment is Confirmed",
-                sender='n.ntare@alustudent.com',
+                sender=app.config['MAIL_USERNAME'],
                 recipients=[current_user.email]
             )
             msg.body = f"""
@@ -124,8 +129,9 @@ Thank you for choosing ConnectCare!
             mail.send(msg)
             flash(f"Appointment for {department} booked! Confirmation email sent.", 'success')
         except Exception as e:
-            # Handle email errors gracefully
-            flash(f"Appointment for {department} booked! (Email notification failed)", 'warning')
+            # Don't let email errors break the app
+            print(f"Email error: {e}")
+            flash(f"Appointment for {department} booked! (Email notification unavailable)", 'success')
         
         return redirect(url_for('my_appointments'))
 
@@ -151,11 +157,6 @@ def cancel_appointment(appointment_id):
     db.session.commit()
     flash("Appointment canceled successfully.", 'success')
     return redirect(url_for('my_appointments'))
-
-
-@app.route('/health')
-def health_check():
-    return {'status': 'healthy'}, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
