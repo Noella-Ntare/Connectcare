@@ -1,2 +1,6 @@
-Flask
-gunicorn
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-Mail==0.9.1
+Flask-Bcrypt==1.0.1
+Flask-Login==0.6.3
+gunicorn==21.2.0
