@@ -152,5 +152,10 @@ def cancel_appointment(appointment_id):
     flash("Appointment canceled successfully.", 'success')
     return redirect(url_for('my_appointments'))
 
+
+@app.route('/health')
+def health_check():
+    return {'status': 'healthy'}, 200
+
 if __name__ == '__main__':
     app.run(debug=True)
